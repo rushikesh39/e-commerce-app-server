@@ -48,7 +48,7 @@ const sendVerificationEmail = async (email, verificationToken) => {
     from: "shopSwift",
     to: email,
     subject: "Email Verification",
-    text: `Please click the following link to verify your email: http://192.168.211.159:8000/verify/${verificationToken}`,
+    text: `Please click the following link to verify your email: https://ecommerce-app-server-ivo6.onrender.com/verify/${verificationToken}`,
   };
 
   // Send the email
