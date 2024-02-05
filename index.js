@@ -16,7 +16,7 @@ const jwt = require("jsonwebtoken");
 app.listen(port, () => {
   console.log("Server is running on port 8000");
 });
-
+//   mongodb://127.0.0.1:27017/  
 mongoose
   .connect("mongodb+srv://test:aqWW9h8C6XnEYE4h@cluster0.lkhf4ct.mongodb.net/", {
     useNewUrlParser: true,
@@ -31,6 +31,36 @@ mongoose
 
 const User = require("./models/user");
 const Order = require("./models/order");
+const Product=require("./models/product")
+
+
+// Product.insertMany({
+//   id:1,
+//   title: 'OnePlus Nord CE 3 Lite 5G (Pastel Lime, 8GB RAM, 128GB Storage)',
+//   oldPrice: 74000,
+//   price: 26000,
+//   category: 'Mobile',
+//   subCategory:"deal of the day",
+//   image:"https://images-eu.ssl-images-amazon.com/images/G/31/wireless_products/ssserene/weblab_wf/xcm_banners_2022_in_bau_wireless_dec_580x800_once3l_v2_580x800_in-en.jpg",
+//   carouselImages: [
+//     "https://m.media-amazon.com/images/I/61QRgOgBx0L._SX679_.jpg",
+//     "https://m.media-amazon.com/images/I/61uaJPLIdML._SX679_.jpg",
+//     "https://m.media-amazon.com/images/I/510YZx4v3wL._SX679_.jpg",
+//     "https://m.media-amazon.com/images/I/61J6s1tkwpL._SX679_.jpg",
+//   ],
+//   color: "Cloud Navy",
+//   size: "8 GB RAM 128GB Storage",
+// });
+
+app.get('/api/products', async (req, res) => {
+  try {
+    const products = await Product.find();
+    res.json(products);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
 const sendVerificationEmail = async (email, verificationToken) => {
   // Create a Nodemailer transporter
@@ -46,7 +76,7 @@ const sendVerificationEmail = async (email, verificationToken) => {
   // Compose the email message
   const mailOptions = {
     from: "shopSwift",
-    to: email,
+    to: email, 
     subject: "Email Verification",
     text: `Please click the following link to verify your shopswift email: https://ecommerce-app-server-ivo6.onrender.com/verify/${verificationToken}`,
   };
