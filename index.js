@@ -62,6 +62,22 @@ app.get('/api/products', async (req, res) => {
   }
 });
 
+// search product api 
+app.get('/api/search', async (req, res) => {
+  const { term } = req.query;
+
+  try {
+    // Use a regular expression to perform a case-insensitive search on the product title
+    const searchResults = await Product.find({ title: { $regex: new RegExp(term, 'i') } });
+
+    res.json(searchResults);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
 const sendVerificationEmail = async (email, verificationToken) => {
   // Create a Nodemailer transporter
   const transporter = nodemailer.createTransport({
